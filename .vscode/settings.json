@@ -1,0 +1,5 @@
+{
+    "python.pythonPath": "/home/xens/.local/share/virtualenvs/MyMDB-e4ENt3L8/bin/python",
+    "python.linting.pylintEnabled": true,
+    "python.linting.enabled": true
+}
