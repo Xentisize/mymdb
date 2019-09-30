@@ -1,0 +1,22 @@
+[
+  {
+    "model": "core.movie",
+    "pk": 1,
+    "fields": {
+      "title": "Sleuth",
+      "plot": "An snobbish writer who loves games invite his wife's lover for a battle of wits.",
+      "year": 1972,
+      "runtime": 138
+    }
+  },
+  {
+    "model": "core.movie",
+    "pk": 2,
+    "fields": {
+      "title": "The Italian Job",
+      "plot": "A comic caper run by a cockney criminal centres on hinges on a traffic jam",
+      "year": 1969,
+      "runtime": 99
+    }
+  }
+]

@@ -1,3 +1,12 @@
-from django.shortcuts import render
+from django.views.generic import ListView, DetailView
 
-# Create your views here.
+from .models import Movie
+
+
+class MovieList(ListView):
+    model = Movie
+
+
+class MovieDetail(DetailView):
+    model = Movie
+
