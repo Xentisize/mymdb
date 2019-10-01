@@ -23,17 +23,16 @@
         <a href="{% url 'core:MovieList' %}" class="nav-link">Movies</a>
       </nav>
     </div>
-    </div>
-    <div class="container">
-      <div class="row">
-        <div class="col-sm-8 mymdb-main">
-          {% block main %}
-          {% endblock main %}
-        </div>
-        <div class="col-sm-3 offset-sm-1 mymdb-sidebar">
-          {% block sidebar %}
-          {% endblock sidebar %}
-        </div>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-8 mymdb-main">
+        {% block main %}
+        {% endblock main %}
+      </div>
+      <div class="col-sm-3 offset-sm-1 mymdb-sidebar">
+        {% block sidebar %}
+        {% endblock sidebar %}
       </div>
     </div>
   </div>
