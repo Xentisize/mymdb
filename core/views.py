@@ -5,7 +5,7 @@ from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.views.generic import CreateView, DetailView, ListView, UpdateView
 
-from .forms import VoteForm
+from .forms import VoteForm, MovieImageForm
 from .models import Movie, Person, Vote
 
 

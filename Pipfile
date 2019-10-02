@@ -11,6 +11,7 @@ psycopg2-binary = "*"
 pylint = "*"
 pylint-django = "*"
 black = "*"
+pillow = "*"
 
 [requires]
 python_version = "3.7"
