@@ -1,6 +1,5 @@
 from django.db import models
-
-from core.models import Vote
+from django.db.models.aggregates import Sum
 
 
 class PersonManager(models.Manager):
@@ -14,6 +13,11 @@ class MovieManager(models.Manager):
         qs = self.get_queryset()
         qs = qs.select_related("director")
         qs = qs.prefetch_related("writers", "actors")
+        return qs
+
+    def all_with_related_persons_and_score(self):
+        qs = self.all_with_related_persons()
+        qs = qs.annotate(score=Sum("vote__value"))
         return qs
 
 

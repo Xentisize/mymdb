@@ -14,6 +14,9 @@
 {% block sidebar %}
   <div>This movie is rated: <span class="badge badge-primary">{{ object.get_rating_display }}</span></div>
   <div>
+    <h2>Score: {{ object.score|default_if_none:"TBC" }}</h2>
+  </div>
+  <div>
     {% if vote_form %}
       <form action="{{ vote_form_url }}" method="post">
         {% csrf_token %}

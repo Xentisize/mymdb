@@ -1,7 +1,7 @@
 from django.db import models
 from django.conf import settings
 
-from core.managers import PersonManager, MovieManager, VoteManager
+from .managers import PersonManager, MovieManager, VoteManager
 
 
 class Movie(models.Model):
@@ -23,9 +23,15 @@ class Movie(models.Model):
     runtime = models.PositiveIntegerField()
     website = models.URLField(blank=True)
     director = models.ForeignKey(
-        "Person", related_name="directed", on_delete=models.SET_NULL, null=True, blank=True
+        "Person",
+        related_name="directed",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
     )
-    writers = models.ManyToManyField("Person", related_name="writing_credits", blank=True)
+    writers = models.ManyToManyField(
+        "Person", related_name="writing_credits", blank=True
+    )
     actors = models.ManyToManyField(
         "Person", through="Role", related_name="acting_credits", blank=True
     )

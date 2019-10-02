@@ -15,7 +15,7 @@ class MovieList(ListView):
 
 
 class MovieDetail(DetailView):
-    queryset = Movie.objects.all_with_related_persons()
+    queryset = Movie.objects.all_with_related_persons_and_score()
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
@@ -28,7 +28,9 @@ class MovieDetail(DetailView):
                     "core:UpdateVote", kwargs={"movie_id": vote.movie.id, "pk": vote.id}
                 )
             else:
-                vote_form_url = reverse("core:CreateVote", kwargs={"movie_id": self.object.id})
+                vote_form_url = reverse(
+                    "core:CreateVote", kwargs={"movie_id": self.object.id}
+                )
             vote_form = VoteForm(instance=vote)
             ctx["vote_form"] = vote_form
             ctx["vote_form_url"] = vote_form_url
@@ -47,6 +49,28 @@ class CreateVote(LoginRequiredMixin, CreateView):
         initial["user"] = self.request.id
         initial["movie"] = self.kwargs["movie_id"]
         return initial
+
+    def get_success_url(self):
+        movie_id = self.object.movie.id
+        return reverse("core:MovieDetail", kwargs={"pk": movie_id})
+
+    def render_to_response(self, context, **response_kwargs):
+        movie_id = context["object"].id
+        movie_detail_url = reverse("core:MovieDetail", kwargs={"pk": movie_id})
+        return redirect(movie_detail_url)
+
+
+class UpdateVote(LoginRequiredMixin, UpdateView):
+    form_class = VoteForm
+    queryset = Vote.objects.all()
+
+    def get_object(self, queryset=None):
+        vote = super().get_object(queryset)
+        user = self.request.user
+
+        if vote.user != user:
+            raise PermissionDenied("cannot change another users vote")
+        return vote
 
     def get_success_url(self):
         movie_id = self.object.movie.id
