@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  Logged out - {{ block.super }}
+{% endblock title %}
+
+{% block main %}
+  <h2>You have been successfully logged out.</h2>
+  <p>Please move to our <a href="{% url 'core:MovieList' %}">homepage</a>.</p>
+{% endblock main %}

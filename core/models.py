@@ -1,6 +1,7 @@
 from django.db import models
+from django.conf import settings
 
-from core.managers import PersonManager, MovieManager
+from core.managers import PersonManager, MovieManager, VoteManager
 
 
 class Movie(models.Model):
@@ -22,15 +23,9 @@ class Movie(models.Model):
     runtime = models.PositiveIntegerField()
     website = models.URLField(blank=True)
     director = models.ForeignKey(
-        "Person",
-        related_name="directed",
-        on_delete=models.SET_NULL,
-        null=True,
-        blank=True,
+        "Person", related_name="directed", on_delete=models.SET_NULL, null=True, blank=True
     )
-    writers = models.ManyToManyField(
-        "Person", related_name="writing_credits", blank=True
-    )
+    writers = models.ManyToManyField("Person", related_name="writing_credits", blank=True)
     actors = models.ManyToManyField(
         "Person", through="Role", related_name="acting_credits", blank=True
     )
@@ -71,4 +66,20 @@ class Role(models.Model):
 
     def __str__(self):
         return f"{self.movie_id} {self.person_id} {self.name}"
+
+
+class Vote(models.Model):
+    UP = 1
+    DOWN = -1
+    VALUE_CHOICES = ((UP, "👍"), (DOWN, "👎"))
+
+    value = models.SmallIntegerField(choices=VALUE_CHOICES)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
+    voted_on = models.DateTimeField(auto_now=True)
+
+    objects = VoteManager()
+
+    class Meta:
+        unique_together = ("user", "movie")
 
